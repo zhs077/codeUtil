@@ -3,8 +3,6 @@
 
 
 typedef  struct thread_pool{
-
-
     int max_thread_num;
     //任务队列
     d_list  task_head;
