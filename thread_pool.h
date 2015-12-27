@@ -9,6 +9,8 @@ typedef  struct thread_pool{
     int cur_task_num;
     pthread_mutex_t task_list_mutext;
     pthread_cond_t  task_read_cond;
+    pthread_t *thread_id;
+    int shutdown;
     
 }thread_pool;
 
