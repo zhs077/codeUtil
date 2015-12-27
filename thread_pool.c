@@ -42,7 +42,7 @@ void thread_pool_destory(thread_pool *self){
     pthread_join(&self->thread_id_array[i]);
   }
   free(self->thread_id_array);
-  pthread_mutex_destory(&self->task_list_mutext);
+  pthread_mutex_destory(&self->task_list_mutex);
   pthread_cond_destroy(&self->task_read_cond);
   free(self);
   self = NULL;
