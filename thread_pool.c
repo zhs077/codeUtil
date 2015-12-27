@@ -5,6 +5,11 @@ int thread_pool_init(thread_pool *self, int max_thread_num){
   self->cur_task_num = 0;
   self->max_thread_num = max_thread_num;
   pthread_mutex_init(&self->task_list_mutext);
+  pthread_cond_init(&self->task_read_cond);
+  
+  
+  
+  return 0;
   
   
   
