@@ -3,30 +3,32 @@
 #define THREAD_POOL_LOG(format, ...) do { \
   #if define OPEN_LOG \
 	fprintf(stderr, format, ##__VA_ARGS__); \
-	#endif\
+ #endif\
 } while(0)
 
 
 void thread_pool_thread_routine(void *args){
+  thread_pool *self = (thread_pool*)args;
+  assert(self);
   
   while(1){
     
-     pthread_mutex_lock();
+     pthread_mutex_lock(&self->task_deque_mutex);
   }
   
 }
 
 int thread_pool_init(thread_pool *self, int max_thread_num){
-  int i;
+  int i, ret;
   
   self = (thread_pool*)malloc(sizeof(thread_pool));
   self->cur_task_num = 0;
   self->max_thread_num = max_thread_num;
   self->thread_id_array = (pthread_t)malloc(sizeof(pthread_t) *self->max_thread_num);
-  pthread_mutex_init(&self->task_list_mutex);
+  pthread_mutex_init(&self->task_deque_mutex);
   pthread_cond_init(&self->task_read_cond);
   for (i = 0; i < self->max_thread_num; i++){
-    pthread_create(&self->thread_id_array[i], NULL, thread_pool_thread_routine, NULL);
+    ret = pthread_create(&self->thread_id_array[i], NULL, thread_pool_thread_routine, self);
   }
   self->shutdown = 0;
   
