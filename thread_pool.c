@@ -1,5 +1,10 @@
 #include "thread_pool.h"
 
+#define THREAD_POOL_LOG(format, ...) do { \
+  #if define OPEN_LOG \
+	fprintf(stderr, format, ##__VA_ARGS__); \
+	#endif\
+} while(0)
 
 
 void thread_pool_thread_routine(void *args){
